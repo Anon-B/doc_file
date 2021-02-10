@@ -1,0 +1,1647 @@
+{
+    "openapi" : "3.0.0",
+    "servers" : [{
+      "description" : "OSGO API",
+      "url" : "https://openapi.osgeo.in.th/v1.1/"
+    } ],
+    "tags" : [ {
+      "name" : "ฟีเจอร์คอลเลคชั่น",
+      "description" : "ชุดของฟีเจอร์"      
+    }, {
+      "name" : "ฟีเจอร์",
+      "description" : "ตัวแทนของปรากฏการณ์จริงของโลก" 
+    } ],
+    "paths" : {
+      "/collections" : {
+        "post" : {
+          "summary" : "สร้างคอลเลคชั่นใหม่",
+          "tags" : [ "ฟีเจอร์คอลเลคชั่น" ],
+          "parameters" : [ {
+            "in" : "header",
+            "required" : true,
+            "name" : "API-Key",
+            "description" : "API Key",
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "requestBody" : {
+            "required" : true,
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "required" : [ "name" ],
+                  "properties" : {
+                    "name" : {
+                      "type" : "string"
+                    },
+                    "custom_fields" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object"
+                      }
+                    },
+                    "style" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object"
+                      }
+                    }
+                  }
+                },
+                "example" : {
+                  "name" : "Collection Test",
+                  "custom_fields" : [ {
+                    "name" : "desc",
+                    "alias" : "รายละเอียด",
+                    "data_type" : "string",
+                    "allow_list" : false
+                  }, {
+                    "name" : "type",
+                    "alias" : "ประเภท",
+                    "data_type" : "int",
+                    "allow_list" : true,
+                    "lookup_values" : [ {
+                      "label" : "ประเภทที่ 1",
+                      "value" : 1
+                    }, {
+                      "label" : "ประเภทที่ 2",
+                      "value" : 2
+                    } ]
+                  } ],
+                  "style" : [ ]
+                }
+              }
+            }
+          },
+          "responses" : {
+            "201" : {
+              "description" : "Status Created",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "type" : "object",
+                    "properties" : {
+                      "status" : {
+                        "type" : "object",
+                        "properties" : {
+                          "code" : {
+                            "type" : "integer"
+                          },
+                          "message" : {
+                            "type" : "string"
+                          }
+                        }
+                      },
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "_id" : {
+                              "type" : "string"
+                            },
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "custom_fields" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "name" : {
+                                    "type" : "string"
+                                  },
+                                  "alias" : {
+                                    "type" : "string"
+                                  },
+                                  "data_type" : {
+                                    "type" : "string"
+                                  },
+                                  "allow_list" : {
+                                    "type" : "boolean"
+                                  },
+                                  "lookup_values" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "label" : {
+                                        "type" : "string"
+                                      },
+                                      "value" : {
+                                        "type" : "number"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "style" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "linestring" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_width" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      }
+                                    }
+                                  },
+                                  "point" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "fill_color" : {
+                                        "type" : "string"
+                                      },
+                                      "radius" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      },
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "symbol" : {
+                                        "type" : "string",
+                                        "example" : "circle"
+                                      }
+                                    }
+                                  },
+                                  "polygon" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "fill_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_width" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "peoples" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "user_id" : {
+                                    "type" : "string"
+                                  },
+                                  "role" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              }
+                            },
+                            "created_at" : {
+                              "type" : "string",
+                              "format" : "date-time"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example" : {
+                    "status" : {
+                      "code" : 201,
+                      "message" : "Created"
+                    },
+                    "data" : [ {
+                      "_id" : "5f0c147269df747623de5001",
+                      "name" : "Collection Test",
+                      "custom_fields" : [ {
+                        "name" : "desc",
+                        "alias" : "รายละเอียด",
+                        "data_type" : "string",
+                        "allow_list" : false
+                      }, {
+                        "name" : "type",
+                        "alias" : "ประเภท",
+                        "data_type" : "int",
+                        "allow_list" : true,
+                        "lookup_values" : [ {
+                          "label" : "ประเภทที่ 1",
+                          "value" : 1
+                        }, {
+                          "label" : "ประเภทที่ 2",
+                          "value" : 2
+                        } ]
+                      } ],
+                      "peoples" : [ {
+                        "user_id" : "5df064549ce6c347a5fcce29",
+                        "role" : "owner"
+                      } ],
+                      "created_at" : "2020-07-13T07:59:46.31339762Z"
+                    } ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get" : {
+          "summary" : "ดึงคอลเลคชั่นทั้งหมด",
+          "tags" : [ "ฟีเจอร์คอลเลคชั่น" ],
+          "parameters" : [ {
+            "in" : "header",
+            "required" : true,
+            "name" : "API-Key",
+            "description" : "API key",
+            "schema" : {
+              "type" : "string"
+            }
+          }, {
+            "in" : "query",
+            "name" : "search",
+            "description" : "ค้นหาโดยใช้ชื่อคอลเลคชั่น",
+            "schema" : {
+              "type" : "string"
+            }
+          }, {
+            "in" : "query",
+            "name" : "sort",
+            "description" : "การเรียงลำดับข้อมูลมี 2 แบบ คือ จากน้อยไปมาก (asc) และจากมากไปน้อย (desc) รูปแบบการเรียงลำดับ คือ {properties}.{Key}:{type sort}",
+            "schema" : {
+              "type" : "string"
+            },
+            "example" : "_id:desc"
+          }, {
+            "in" : "query",
+            "name" : "limit",
+            "description" : "จำกัดจำนวนผลลัพธ์ของข้อมูล",
+            "schema" : {
+              "type" : "integer",
+              "example" : 2
+            }
+          }, {
+            "in" : "query",
+            "name" : "offset",
+            "description" : "จำนวนของข้อมูลที่จะข้าม",
+            "schema" : {
+              "type" : "integer"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Status OK",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "type" : "object",
+                    "properties" : {
+                      "status" : {
+                        "type" : "object",
+                        "properties" : {
+                          "code" : {
+                            "type" : "integer"
+                          },
+                          "message" : {
+                            "type" : "string"
+                          }
+                        }
+                      },
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "_id" : {
+                              "type" : "string"
+                            },
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "custom_fields" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "name" : {
+                                    "type" : "string"
+                                  },
+                                  "alias" : {
+                                    "type" : "string"
+                                  },
+                                  "data_type" : {
+                                    "type" : "string"
+                                  },
+                                  "allow_list" : {
+                                    "type" : "boolean"
+                                  },
+                                  "lookup_values" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "label" : {
+                                        "type" : "string"
+                                      },
+                                      "value" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "style" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "linestring" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_width" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      }
+                                    }
+                                  },
+                                  "point" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "fill_color" : {
+                                        "type" : "string"
+                                      },
+                                      "radius" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      },
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "symbol" : {
+                                        "type" : "string",
+                                        "example" : "circle"
+                                      }
+                                    }
+                                  },
+                                  "polygon" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "fill_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_width" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      }
+                                    }
+                                  },
+                                  "style_name" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              }
+                            },
+                            "peoples" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "user_id" : {
+                                    "type" : "string"
+                                  },
+                                  "role" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              }
+                            },
+                            "deleted_at" : {
+                              "type" : "string",
+                              "format" : "date-time"
+                            },
+                            "created_at" : {
+                              "type" : "string",
+                              "format" : "date-time"
+                            },
+                            "updated_at" : {
+                              "type" : "string",
+                              "format" : "date-time"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "example" : {
+                      "status" : {
+                        "code" : 200,
+                        "message" : "OK"
+                      },
+                      "data" : [ {
+                        "_id" : "5f0c147269df747623de5001",
+                        "name" : "Collection Test",
+                        "custom_fields" : [ {
+                          "name" : "desc",
+                          "alias" : "รายละเอียด",
+                          "data_type" : "string",
+                          "allow_list" : false
+                        }, {
+                          "name" : "type",
+                          "alias" : "ประเภท",
+                          "data_type" : "int",
+                          "allow_list" : true,
+                          "lookup_values" : [ {
+                            "label" : "ประเภทที่ 1",
+                            "value" : 1
+                          }, {
+                            "label" : "ประเภทที่ 2",
+                            "value" : 2
+                          } ]
+                        } ],
+                        "peoples" : [ {
+                          "user_id" : "5df064549ce6c347a5fcce29",
+                          "role" : "owner"
+                        } ],
+                        "created_at" : "2020-07-13T07:59:46.313Z"
+                      }, {
+                        "_id" : "5f0835b0984d88a79657a002",
+                        "name" : "My Collection",
+                        "custom_fields" : [ {
+                          "name" : "desc",
+                          "alias" : "รายละเอียด",
+                          "data_type" : "string",
+                          "allow_list" : false
+                        }, {
+                          "name" : "type",
+                          "alias" : "ประเภท",
+                          "data_type" : "int",
+                          "allow_list" : true,
+                          "lookup_values" : [ {
+                            "label" : "ประเภทที่ 1",
+                            "value" : 1
+                          }, {
+                            "label" : "ประเภทที่ 2",
+                            "value" : 2
+                          } ]
+                        } ],
+                        "peoples" : [ {
+                          "user_id" : "5f07fe7d2610fbbd44480869",
+                          "role" : "owner"
+                        } ],
+                        "created_at" : "2020-07-10T09:32:32.105Z",
+                        "updated_at" : "2020-07-10T09:35:56.326Z"
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/collections/{collection_id}" : {
+        "get" : {
+          "summary" : "ดึงคอลเลคชั่นด้วยไอดี",
+          "tags" : [ "ฟีเจอร์คอลเลคชั่น" ],
+          "parameters" : [ {
+            "in" : "header",
+            "required" : true,
+            "name" : "API-Key",
+            "description" : "API Key",
+            "schema" : {
+              "type" : "string"
+            }
+          }, {
+            "in" : "path",
+            "name" : "collection_id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "description" : "คอลเลคชั่นไอดี"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Status OK",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "type" : "object",
+                    "properties" : {
+                      "status" : {
+                        "type" : "object",
+                        "properties" : {
+                          "code" : {
+                            "type" : "integer"
+                          },
+                          "message" : {
+                            "type" : "string"
+                          }
+                        }
+                      },
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "_id" : {
+                              "type" : "string"
+                            },
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "custom_fields" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "name" : {
+                                    "type" : "string"
+                                  },
+                                  "alias" : {
+                                    "type" : "string"
+                                  },
+                                  "data_type" : {
+                                    "type" : "string"
+                                  },
+                                  "allow_list" : {
+                                    "type" : "boolean"
+                                  },
+                                  "lookup_values" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "label" : {
+                                        "type" : "string"
+                                      },
+                                      "value" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "style" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "linestring" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_width" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      }
+                                    }
+                                  },
+                                  "point" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "fill_color" : {
+                                        "type" : "string"
+                                      },
+                                      "radius" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      },
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "symbol" : {
+                                        "type" : "string",
+                                        "example" : "circle"
+                                      }
+                                    }
+                                  },
+                                  "polygon" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "fill_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_width" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      }
+                                    }
+                                  },
+                                  "style_name" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              }
+                            },
+                            "peoples" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "user_id" : {
+                                    "type" : "string"
+                                  },
+                                  "role" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              }
+                            },
+                            "deleted_at" : {
+                              "type" : "string",
+                              "format" : "date-time"
+                            },
+                            "created_at" : {
+                              "type" : "string",
+                              "format" : "date-time"
+                            },
+                            "updated_at" : {
+                              "type" : "string",
+                              "format" : "date-time"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "example" : {
+                      "status" : {
+                        "code" : 200,
+                        "message" : "OK"
+                      },
+                      "data" : [ {
+                        "_id" : "5f0c147269df747623de5001",
+                        "name" : "Collection Test",
+                        "custom_fields" : [ {
+                          "name" : "desc",
+                          "alias" : "รายละเอียด",
+                          "data_type" : "string",
+                          "allow_list" : false
+                        }, {
+                          "name" : "type",
+                          "alias" : "ประเภท",
+                          "data_type" : "int",
+                          "allow_list" : true,
+                          "lookup_values" : [ {
+                            "label" : "ประเภทที่ 1",
+                            "value" : 1
+                          }, {
+                            "label" : "ประเภทที่ 2",
+                            "value" : 2
+                          } ]
+                        } ],
+                        "peoples" : [ {
+                          "user_id" : "5df064549ce6c347a5fcce29",
+                          "role" : "owner"
+                        } ],
+                        "created_at" : "2020-07-13T07:59:46.313Z"
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put" : {
+          "summary" : "อัปเดตคอลเลคชั่นด้วยไอดี",
+          "tags" : [ "ฟีเจอร์คอลเลคชั่น" ],
+          "parameters" : [ {
+            "in" : "header",
+            "required" : true,
+            "name" : "API-Key",
+            "description" : "API Key",
+            "schema" : {
+              "type" : "string"
+            }
+          }, {
+            "in" : "path",
+            "name" : "collection_id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "description" : "คอลเลคชั่นไอดี"
+          } ],
+          "requestBody" : {
+            "required" : true,
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "required" : [ "name" ],
+                  "properties" : {
+                    "name" : {
+                      "type" : "string"
+                    },
+                    "custom_fields" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object"
+                      }
+                    },
+                    "style" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object"
+                      }
+                    }
+                  }
+                },
+                "example" : {
+                  "name" : "Collection Test",
+                  "custom_fields" : [ {
+                    "name" : "desc",
+                    "alias" : "รายละเอียด",
+                    "data_type" : "string",
+                    "allow_list" : false
+                  }, {
+                    "name" : "type",
+                    "alias" : "ประเภท",
+                    "data_type" : "int",
+                    "allow_list" : true,
+                    "lookup_values" : [ {
+                      "label" : "ประเภทที่ 1",
+                      "value" : 1
+                    }, {
+                      "label" : "ประเภทที่ 2",
+                      "value" : 2
+                    } ]
+                  } ],
+                  "style" : [ ]
+                }
+              }
+            }
+          },
+          "responses" : {
+            "201" : {
+              "description" : "Status Updated",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "type" : "object",
+                    "properties" : {
+                      "status" : {
+                        "type" : "object",
+                        "properties" : {
+                          "code" : {
+                            "type" : "integer"
+                          },
+                          "message" : {
+                            "type" : "string"
+                          }
+                        }
+                      },
+                      "data" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "_id" : {
+                              "type" : "string"
+                            },
+                            "name" : {
+                              "type" : "string"
+                            },
+                            "custom_fields" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "name" : {
+                                    "type" : "string"
+                                  },
+                                  "alias" : {
+                                    "type" : "string"
+                                  },
+                                  "data_type" : {
+                                    "type" : "string"
+                                  },
+                                  "allow_list" : {
+                                    "type" : "boolean"
+                                  },
+                                  "lookup_values" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "label" : {
+                                        "type" : "string"
+                                      },
+                                      "value" : {
+                                        "type" : "number"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "style" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "linestring" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_width" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      }
+                                    }
+                                  },
+                                  "point" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "fill_color" : {
+                                        "type" : "string"
+                                      },
+                                      "radius" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      },
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "symbol" : {
+                                        "type" : "string",
+                                        "example" : "circle"
+                                      }
+                                    }
+                                  },
+                                  "polygon" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                      "fill_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_color" : {
+                                        "type" : "string"
+                                      },
+                                      "stroke_width" : {
+                                        "type" : "number",
+                                        "format" : "float"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "peoples" : {
+                              "type" : "array",
+                              "items" : {
+                                "type" : "object",
+                                "properties" : {
+                                  "user_id" : {
+                                    "type" : "string"
+                                  },
+                                  "role" : {
+                                    "type" : "string"
+                                  }
+                                }
+                              }
+                            },
+                            "created_at" : {
+                              "type" : "string",
+                              "format" : "date-time"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example" : {
+                    "status" : {
+                      "code" : 200,
+                      "message" : "Updated"
+                    },
+                    "data" : [ {
+                      "_id" : "5f0c147269df747623de5001",
+                      "name" : "Collection Test",
+                      "custom_fields" : [ {
+                        "name" : "desc",
+                        "alias" : "รายละเอียด",
+                        "data_type" : "string",
+                        "allow_list" : false
+                      }, {
+                        "name" : "type",
+                        "alias" : "ประเภท",
+                        "data_type" : "int",
+                        "allow_list" : true,
+                        "lookup_values" : [ {
+                          "label" : "ประเภทที่ 1",
+                          "value" : 1
+                        }, {
+                          "label" : "ประเภทที่ 2",
+                          "value" : 2
+                        } ]
+                      } ],
+                      "peoples" : [ {
+                        "user_id" : "5df064549ce6c347a5fcce29",
+                        "role" : "owner"
+                      } ],
+                      "created_at" : "2020-07-13T07:59:46.31339762Z"
+                    } ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete" : {
+          "summary" : "ลบคอลเลคชั่นด้วยไอดี",
+          "tags" : [ "ฟีเจอร์คอลเลคชั่น" ],
+          "parameters" : [ {
+            "in" : "header",
+            "required" : true,
+            "name" : "API-Key",
+            "description" : "API Key",
+            "schema" : {
+              "type" : "string"
+            }
+          }, {
+            "in" : "path",
+            "name" : "collection_id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "description" : "คอลเลคชั่นไอดี"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Status Delete",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "type" : "object",
+                    "properties" : {
+                      "status" : {
+                        "type" : "object",
+                        "properties" : {
+                          "code" : {
+                            "type" : "integer"
+                          },
+                          "message" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example" : {
+                    "status" : {
+                      "code" : 200,
+                      "message" : "Delete"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/collections/{collection_id}/items" : {
+        "post" : {
+          "summary" : "เพิ่มฟีเจอร์ใหม่ในคอลเลคชั่น",
+          "tags" : [ "ฟีเจอร์" ],
+          "parameters" : [ {
+            "in" : "header",
+            "required" : true,
+            "name" : "API-Key",
+            "description" : "API Key",
+            "schema" : {
+              "type" : "string"
+            }
+          }, {
+            "in" : "path",
+            "name" : "collection_id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "description" : "คอลเลคชั่นไอดี"
+          } ],
+          "requestBody" : {
+            "required" : true,
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "type" : {
+                      "type" : "string"
+                    },
+                    "features" : {
+                      "type" : "array",
+                      "items" : {
+                        "type" : "object",
+                        "properties" : {
+                          "type" : {
+                            "type" : "string"
+                          },
+                          "properties" : {
+                            "type" : "object",
+                            "properties" : {
+                              "name" : {
+                                "type" : "string"
+                              },
+                              "desc" : {
+                                "type" : "string"
+                              },
+                              "type" : {
+                                "type" : "integer"
+                              }
+                            }
+                          },
+                          "geometry" : {
+                            "type" : "object",
+                            "properties" : {
+                              "type" : {
+                                "type" : "string"
+                              },
+                              "coordinates" : {
+                                "type" : "array",
+                                "items" : {
+                                  "type" : "integer"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example" : {
+                  "type" : "FeatureCollection",
+                  "features" : [ {
+                    "type" : "ฟีเจอร์",
+                    "properties" : {
+                      "name" : "อุทยานวิทยาศาสตร์ มข",
+                      "desc" : "ที่ทำงาน",
+                      "type" : 1
+                    },
+                    "geometry" : {
+                      "type" : "Point",
+                      "coordinates" : [ 102.819062769413, 16.45593693847742 ]
+                    }
+                  }, {
+                    "type" : "ฟีเจอร์",
+                    "properties" : {
+                      "name" : "เพลิน เพลิน",
+                      "desc" : "ร้านเหล้า",
+                      "type" : 2
+                    },
+                    "geometry" : {
+                      "type" : "Point",
+                      "coordinates" : [ 102.82094568014143, 16.45434979818847 ]
+                    }
+                  } ]
+                }
+              }
+            }
+          },
+          "responses" : {
+            "200" : {
+              "description" : "Status Created",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "type" : "object",
+                    "properties" : {
+                      "type" : {
+                        "type" : "string"
+                      },
+                      "features" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "type" : {
+                              "type" : "string"
+                            },
+                            "properties" : {
+                              "type" : "object",
+                              "properties" : {
+                                "name" : {
+                                  "type" : "string"
+                                },
+                                "desc" : {
+                                  "type" : "string"
+                                },
+                                "type" : {
+                                  "type" : "integer"
+                                }
+                              }
+                            },
+                            "geometry" : {
+                              "type" : "object",
+                              "properties" : {
+                                "type" : {
+                                  "type" : "string"
+                                },
+                                "coordinates" : {
+                                  "type" : "array",
+                                  "items" : {
+                                    "type" : "integer"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example" : {
+                    "type" : "FeatureCollection",
+                    "features" : [ {
+                      "type" : "ฟีเจอร์",
+                      "geometry" : {
+                        "type" : "Point",
+                        "coordinates" : [ 102.819062769413, 16.45593693847742 ]
+                      },
+                      "properties" : {
+                        "_id" : "5f0c340f69df747623de5001",
+                        "dataset_id" : "5f0c147269df747623de53c2",
+                        "desc" : "ที่ทำงาน",
+                        "name" : "อุทยานวิทยาศาสตร์ มข",
+                        "type" : 1
+                      }
+                    }, {
+                      "type" : "ฟีเจอร์",
+                      "geometry" : {
+                        "type" : "Point",
+                        "coordinates" : [ 102.82094568014143, 16.45434979818847 ]
+                      },
+                      "properties" : {
+                        "_id" : "5f0c340f69df747623de5002",
+                        "dataset_id" : "5f0c147269df747623de53c2",
+                        "desc" : "ร้านเหล้า",
+                        "name" : "เพลิน เพลิน",
+                        "type" : 2
+                      }
+                    } ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get" : {
+          "summary" : "ดึงฟีเจอร์ทั้งหมดในคอลเลคชั่น",
+          "tags" : [ "ฟีเจอร์" ],
+          "parameters" : [ {
+            "in" : "header",
+            "required" : true,
+            "name" : "API-Key",
+            "description" : "API Key",
+            "schema" : {
+              "type" : "string"
+            }
+          }, {
+            "in" : "path",
+            "name" : "collection_id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "description" : "คอลเลคชั่นไอดี"
+          }, {
+            "in" : "query",
+            "name" : "filter",
+            "description" : "กรองข้อมูลเพื่อเรียกดูเฉพาะข้อมูลที่สนใจ รูปแบบของ filter = {properties}.{Key}:{value}",
+            "schema" : {
+              "type" : "string"
+            }
+          }, {
+            "in" : "query",
+            "name" : "bbox",
+            "description" : "กำหนด Bounding Box เพื่อกรองข้อมูลที่อยู่ในกรอบพื้นที่ที่ต้องการ [Bounding Box](http://bboxfinder.com/)",
+            "schema" : {
+              "type" : "integer"
+            }
+          }, {
+            "in" : "query",
+            "name" : "sort",
+            "description" : "การเรียงลำดับข้อมูลมี 2 แบบ คือ จากน้อยไปมาก (asc) และจากมากไปน้อย (desc) รูปแบบการเรียงลำดับ คือ {properties}.{Key}:{type sort}",
+            "schema" : {
+              "type" : "string"
+            },
+            "example" : "properties._id:desc"
+          }, {
+            "in" : "query",
+            "name" : "limit",
+            "description" : "จำกัดจำนวนผลลัพธ์ของข้อมูล",
+            "schema" : {
+              "type" : "integer",
+              "example" : 2
+            }
+          }, {
+            "in" : "query",
+            "name" : "offset",
+            "description" : "จำนวนของข้อมูลที่จะข้าม",
+            "schema" : {
+              "type" : "integer"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Status OK",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "type" : "object",
+                    "properties" : {
+                      "type" : {
+                        "type" : "string"
+                      },
+                      "features" : {
+                        "type" : "array",
+                        "items" : {
+                          "type" : "object",
+                          "properties" : {
+                            "type" : {
+                              "type" : "string"
+                            },
+                            "properties" : {
+                              "type" : "object",
+                              "properties" : {
+                                "name" : {
+                                  "type" : "string"
+                                },
+                                "desc" : {
+                                  "type" : "string"
+                                },
+                                "type" : {
+                                  "type" : "integer"
+                                }
+                              }
+                            },
+                            "geometry" : {
+                              "type" : "object",
+                              "properties" : {
+                                "type" : {
+                                  "type" : "string"
+                                },
+                                "coordinates" : {
+                                  "type" : "array",
+                                  "items" : {
+                                    "type" : "integer"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example" : {
+                    "type" : "FeatureCollection",
+                    "features" : [ {
+                      "type" : "ฟีเจอร์",
+                      "geometry" : {
+                        "type" : "Point",
+                        "coordinates" : [ 102.819062769413, 16.45593693847742 ]
+                      },
+                      "properties" : {
+                        "_id" : "5f0c340f69df747623de5001",
+                        "dataset_id" : "5f0c147269df747623de53c2",
+                        "desc" : "ที่ทำงาน",
+                        "name" : "อุทยานวิทยาศาสตร์ มข",
+                        "type" : 1
+                      }
+                    }, {
+                      "type" : "ฟีเจอร์",
+                      "geometry" : {
+                        "type" : "Point",
+                        "coordinates" : [ 102.82094568014143, 16.45434979818847 ]
+                      },
+                      "properties" : {
+                        "_id" : "5f0c340f69df747623de5002",
+                        "dataset_id" : "5f0c147269df747623de53c2",
+                        "desc" : "ร้านเหล้า",
+                        "name" : "เพลิน เพลิน",
+                        "type" : 2
+                      }
+                    } ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/collections/{collection_id}/items/{item_id}" : {
+        "get" : {
+          "summary" : "ดึงฟีเจอร์ในคอลเลคชั่นด้วยไอดี",
+          "tags" : [ "ฟีเจอร์" ],
+          "parameters" : [ {
+            "in" : "header",
+            "required" : true,
+            "name" : "API-Key",
+            "description" : "API key",
+            "schema" : {
+              "type" : "string"
+            }
+          }, {
+            "in" : "path",
+            "name" : "collection_id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "description" : "คอลเลคชั่นไอดี"
+          }, {
+            "in" : "path",
+            "name" : "features_id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "description" : "ฟีเจอร์ไอดี"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Status OK",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "type" : "object",
+                    "properties" : {
+                      "type" : {
+                        "type" : "string"
+                      },
+                      "properties" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "desc" : {
+                            "type" : "string"
+                          },
+                          "type" : {
+                            "type" : "integer"
+                          }
+                        }
+                      },
+                      "geometry" : {
+                        "type" : "object",
+                        "properties" : {
+                          "type" : {
+                            "type" : "string"
+                          },
+                          "coordinates" : {
+                            "type" : "array",
+                            "items" : {
+                              "type" : "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example" : {
+                    "type" : "ฟีเจอร์",
+                    "properties" : {
+                      "_id" : "5f0c340f69df747623de53c4",
+                      "dataset_id" : "5f0c147269df747623de53c2",
+                      "desc" : "ร้านเหล้า",
+                      "name" : "เพลิน เพลิน",
+                      "type" : 2
+                    },
+                    "geometry" : {
+                      "coordinates" : [ 102.82094568014143, 16.45434979818847 ],
+                      "type" : "Point"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put" : {
+          "summary" : "อัปเดตฟีเจอร์ในคอลเลคชั่นด้วยไอดี",
+          "tags" : [ "ฟีเจอร์" ],
+          "parameters" : [ {
+            "in" : "header",
+            "required" : true,
+            "name" : "API-Key",
+            "description" : "API key",
+            "schema" : {
+              "type" : "string"
+            }
+          }, {
+            "in" : "path",
+            "name" : "collection_id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "description" : "คอลเลคชั่นไอดี"
+          }, {
+            "in" : "path",
+            "name" : "features_id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "description" : "ฟีเจอร์ไอดี"
+          } ],
+          "requestBody" : {
+            "required" : true,
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "type" : {
+                      "type" : "string"
+                    },
+                    "properties" : {
+                      "type" : "object",
+                      "properties" : {
+                        "name" : {
+                          "type" : "string"
+                        },
+                        "desc" : {
+                          "type" : "string"
+                        },
+                        "type" : {
+                          "type" : "integer"
+                        }
+                      }
+                    },
+                    "geometry" : {
+                      "type" : "object",
+                      "properties" : {
+                        "type" : {
+                          "type" : "string"
+                        },
+                        "coordinates" : {
+                          "type" : "array",
+                          "items" : {
+                            "type" : "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example" : {
+                  "type" : "ฟีเจอร์",
+                  "properties" : {
+                    "name" : "อุทยานวิทยาศาสตร์ มข",
+                    "desc" : "ที่ทำงาน",
+                    "type" : 1
+                  },
+                  "geometry" : {
+                    "type" : "Point",
+                    "coordinates" : [ 102.819062769413, 16.45593693847742 ]
+                  }
+                }
+              }
+            }
+          },
+          "responses" : {
+            "200" : {
+              "description" : "Status Update",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "type" : "object",
+                    "properties" : {
+                      "type" : {
+                        "type" : "string"
+                      },
+                      "properties" : {
+                        "type" : "object",
+                        "properties" : {
+                          "name" : {
+                            "type" : "string"
+                          },
+                          "desc" : {
+                            "type" : "string"
+                          },
+                          "type" : {
+                            "type" : "integer"
+                          }
+                        }
+                      },
+                      "geometry" : {
+                        "type" : "object",
+                        "properties" : {
+                          "type" : {
+                            "type" : "string"
+                          },
+                          "coordinates" : {
+                            "type" : "array",
+                            "items" : {
+                              "type" : "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example" : {
+                    "type" : "ฟีเจอร์",
+                    "properties" : {
+                      "_id" : "5f0c340f69df747623de53c4",
+                      "dataset_id" : "5f0c147269df747623de53c2",
+                      "desc" : "ร้านเหล้า",
+                      "name" : "เพลิน เพลิน",
+                      "type" : 2
+                    },
+                    "geometry" : {
+                      "coordinates" : [ 102.82094568014143, 16.45434979818847 ],
+                      "type" : "Point"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete" : {
+          "summary" : "ลบฟีเจอร์ในคอลเลคชั่นด้วยไอดี",
+          "tags" : [ "ฟีเจอร์" ],
+          "parameters" : [ {
+            "in" : "header",
+            "required" : true,
+            "name" : "API-Key",
+            "description" : "API key",
+            "schema" : {
+              "type" : "string"
+            }
+          }, {
+            "in" : "path",
+            "name" : "collection_id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "description" : "Collection id"
+          }, {
+            "in" : "path",
+            "name" : "features_id",
+            "required" : true,
+            "schema" : {
+              "type" : "string"
+            },
+            "description" : "Item id"
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Status Delete",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "type" : "object",
+                    "properties" : {
+                      "status" : {
+                        "type" : "object",
+                        "properties" : {
+                          "code" : {
+                            "type" : "integer"
+                          },
+                          "message" : {
+                            "type" : "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example" : {
+                    "status" : {
+                      "code" : 200,
+                      "message" : "Delete"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
